@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://web-harvest.sourceforge.net/schema/1.0/config">
+	
+<script><![CDATA[
+        import com.thoughtworks.selenium.*;
+        import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+        import org.openqa.selenium.*;
+        import org.openqa.selenium.remote.RemoteWebDriver;
+        import org.openqa.selenium.interactions.Actions;
+		import org.apache.commons.io.FileUtils;
+    ]]></script>
+    <selenium-flow>
+		<!-- AutoIt driver -->
+        <selenium name="seleniumDriver" browser="autoit" close-on-completion="false">
+            <script><![CDATA[
+               
+               
+                driver = seleniumDriver.getWrappedObject();
+				driver.get("notepad.exe ");
+				driver.switchTo().window("[CLASS:Notepad]");
+				Thread.sleep(500);
+				WebElement editor = driver.findElement(By.cssSelector("[CLASS:Edit; INSTANCE:1]"));
+				editor.sendKeys(new String[]{"\n\nThis is a new content which is added by \"RPA agent\"."});
+
+               
+            ]]></script>
+        </selenium>
+    </selenium-flow>
+
+	
+    <export include-original-data="false">
+        
+    </export>
+	
+</config>
+   
+   
