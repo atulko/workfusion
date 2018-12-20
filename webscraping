@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<var-def name="stores_url">http://www.fuddruckers.com/services/location/get_stores_by_position.php</var-def>
+ 
+	<var-def name="data">
+		<json expression="$.places.positions.data">
+			 <http-extended url="${stores_url}" method="POST"></http-extended>
+		</json>
+	</var-def>
+  		
+	<script><![CDATA[
+		import com.google.gson.Gson;
+    	
+    	Gson gsonObject = new Gson();
+    	List storeList = gsonObject.fromJson(data.toString(), List.class);
+		storeList = storeList.subList(50,100);
+		for(Map m : storeList){
+			m.put("link","www.fuddruckers.com" + m.get("link"));
+		}
+	]]></script>
+
+	<export include-original-data="false">
+		<multi-column list="${storeList}" split-results="true">
+			<put-to-column-getter name="location_name" property="storename"/>
+			<put-to-column-getter name="city" property="city"/>
+			<put-to-column-getter name="state" property="state"/>
+			<put-to-column-getter name="address" property="address"/>
+			<put-to-column-getter name="phone" property="phone"/>
+			<put-to-column-getter name="link" property="link"/>
+		</multi-column>
+	</export>
+</config>
