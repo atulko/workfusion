@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://web-harvest.sourceforge.net/schema/1.0/config"
+	scriptlang="groovy">
+	<script><![CDATA[
+		import com.thoughtworks.selenium.*;
+		import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+		import org.openqa.selenium.*;
+		import org.openqa.selenium.remote.RemoteWebDriver;
+		import org.openqa.selenium.interactions.Actions;
+		import java.util.concurrent.TimeUnit;
+	]]></script>
+	<script>
+		Integer timeOut=240;
+		Map object=new HashMap();
+
+	</script>
+	<selenium-flow>
+		<selenium name="seleniumDriver" browser="autoit" close-on-completion="false">
+ <script><![CDATA[
+                sDriver = seleniumDriver.getWrappedObject();
+
+                sDriver.get("calc.exe");
+                sDriver.switchTo().window("[CLASS:CalcFrame]");
+                sDriver.getKeyboard().sendKeys(new String[]{"2*4*8*16="});
+                String result = sDriver.findElement(By.cssSelector("[TEXT:1024]")).getText();
+                rpaVariables.put("calcResult", result);
+            ]]></script>
+        </selenium>
+	</selenium-flow>
+
+	<export include-original-data="true"></export>
+
+</config>
